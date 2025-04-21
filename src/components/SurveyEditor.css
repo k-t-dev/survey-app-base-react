@@ -1,0 +1,115 @@
+/* 全体のスタイル */
+.survey-editor-container {
+  padding: 100px;
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f9;
+  margin-left: 240px; /* MenuBar の幅 (200px) + padding (左右20px) */
+  /* padding-top は固定表示の場合は不要になることが多いですが、必要に応じて調整 */
+  }
+
+  
+  h1, h3, h4, h5 {
+    color: #333;
+  }
+  
+  /* 入力フィールド */
+  .input-field {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  /* 質問カード */
+  .question-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+  }
+  
+  .question-input {
+    font-size: 16px;
+  }
+  
+  /* 質問削除ボタン */
+  .remove-question-btn {
+    color: red;
+    font-size: 14px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  /* 選択肢 */
+  .option-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .option-input {
+    width: 70%;
+    margin-right: 10px;
+  }
+  
+  .remove-option-btn {
+    color: red;
+    font-size: 14px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* ドラッグアイコン */
+  .drag-icon {
+    margin-right: 10px;
+    cursor: move;
+  }
+  
+  .drag-option {
+    font-size: 20px;
+    color: #666;
+  }
+  
+  .dragging {
+    opacity: 0.5;
+  }
+  
+  /* ボタン */
+  .add-option-btn, .add-question-btn, .save-btn {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  
+  .add-option-btn:hover, .add-question-btn:hover, .save-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .add-question-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .save-btn-container {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+
+  .option-type-label {
+    font-size: 0.9em;
+    color: #555;
+    margin-top: 4px;
+  }
+  

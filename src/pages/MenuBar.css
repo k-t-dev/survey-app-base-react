@@ -1,0 +1,42 @@
+
+  .menu-bar {
+    background-color: #f0f0f0;
+    width: 200px;
+    padding: 20px;
+    /* height: 100vh; /* 画面いっぱいに表示 */ /* 必要に応じて残す */
+    /* position: fixed; /* 固定表示を削除またはコメントアウト */
+    /* top: 0;
+    left: 0; */
+}
+  
+  .menu-title {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+  }
+  
+  .menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .menu-list li {
+    margin-bottom: 10px;
+  }
+  
+  .menu-list li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+    border-radius: 5px;
+  }
+  
+  .menu-list li a:hover {
+    background-color: #ddd;
+  }
+  
+  .menu-list li.active a {
+    background-color: #007bff;
+    color: white;
+  }
