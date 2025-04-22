@@ -11,7 +11,7 @@ const SurveyEditor = ({ companyId, shopId }) => {
   useEffect(() => {
     const fetchSurveyData = async () => {
       try {
-        const response = await fetch(`http://0.0.0.0:5001/survey/${companyId}/${shopId}`);
+        const response = await fetch(`https://dyhbv4khoh.execute-api.ap-northeast-1.amazonaws.com/dev/survey/${companyId}/${shopId}`);
         if (!response.ok) throw new Error("アンケートデータの取得に失敗しました");
 
         const data = await response.json();
@@ -186,7 +186,7 @@ const SurveyEditor = ({ companyId, shopId }) => {
     console.log(payload)
 
     try {
-      const response = await fetch(`http://0.0.0.0:5001/survey/`, {
+      const response = await fetch(`https://dyhbv4khoh.execute-api.ap-northeast-1.amazonaws.com/dev/survey/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

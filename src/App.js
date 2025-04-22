@@ -19,7 +19,6 @@ function App() {
         <Route path="/survey-app/:companyId/shops/" element={<Shops />} />
         <Route path="/survey-app/dashboard/:companyId/:shopId" element={<Dashboard />} />
         <Route path="/survey-app/survey-edit/:companyId/:shopId" element={<SurveyEdit />} />
-        
         <Route path="/survey-app/survey-preview/:companyId/:shopId" element={<SurveyPage />} />
         <Route path="/survey-app/survey-preview/comment/:companyId/:shopId" element={<SurevyCommentPage />} />
 
