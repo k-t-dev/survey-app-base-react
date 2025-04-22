@@ -53,7 +53,7 @@ const SurevyCommentPage = () => {
 
     console.log("!!!!!!formattedPayload:!!!!!", formattedPayload);
     try {
-      const response = await fetch(`https://dyhbv4khoh.execute-api.ap-northeast-1.amazonaws.com/dev/survey-results/comment/`, {
+      const response = await fetch(`https://0jdf7qckt2.execute-api.ap-northeast-1.amazonaws.com/dev/survey-results/comment/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formattedPayload),

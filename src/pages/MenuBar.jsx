@@ -14,7 +14,7 @@ const MenuBar = () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch('https://dyhbv4khoh.execute-api.ap-northeast-1.amazonaws.com/dev/shops'); // Fetch the list of all shops
+        const response = await fetch('https://0jdf7qckt2.execute-api.ap-northeast-1.amazonaws.com/dev/shops'); // Fetch the list of all shops
         if (!response.ok) {
           const message = `HTTP error! status: ${response.status}`;
           throw new Error(message);

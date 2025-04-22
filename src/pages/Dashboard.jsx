@@ -42,7 +42,7 @@ const Dashboard = () => {
       setError(null); // エラー状態をリセット
       try {
         const response = await fetch(
-          `https://dyhbv4khoh.execute-api.ap-northeast-1.amazonaws.com/dev/survey-results/${companyId}/${shopId}`,
+          `https://0jdf7qckt2.execute-api.ap-northeast-1.amazonaws.com/dev/survey-results/${companyId}/${shopId}`,
           {
             method: "GET",
             headers: {

@@ -33,8 +33,8 @@ const ManageInfo = () => {
       try {
         // 並行して複数のAPIを呼び出し
         const [companiesResponse, shopsResponse] = await Promise.all([
-          axios.get("https://dyhbv4khoh.execute-api.ap-northeast-1.amazonaws.com/dev/companies"),
-          axios.get("https://dyhbv4khoh.execute-api.ap-northeast-1.amazonaws.com/dev/shops")
+          axios.get("https://0jdf7qckt2.execute-api.ap-northeast-1.amazonaws.com/dev/companies"),
+          axios.get("https://0jdf7qckt2.execute-api.ap-northeast-1.amazonaws.com/dev/shops")
         ]);
         
         // 取得したデータをそれぞれのステートに保存
@@ -88,7 +88,7 @@ const ManageInfo = () => {
         company.contract = 'cancel';
 
         // TODO Make the API request to delete the company
-        const response = await fetch(`https://dyhbv4khoh.execute-api.ap-northeast-1.amazonaws.com/dev/company/temp_status_changes/${company.company_id}/${company.contract}`, {
+        const response = await fetch(`https://0jdf7qckt2.execute-api.ap-northeast-1.amazonaws.com/dev/company/temp_status_changes/${company.company_id}/${company.contract}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -142,7 +142,7 @@ const resetCompanyData = () => {
     // Make the API request to save the updated companies
     try {
       const companyId = company.company_id;
-      const response = await fetch(`https://dyhbv4khoh.execute-api.ap-northeast-1.amazonaws.com/dev/company/${companyId}`, {
+      const response = await fetch(`https://0jdf7qckt2.execute-api.ap-northeast-1.amazonaws.com/dev/company/${companyId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -190,7 +190,7 @@ const resetCompanyData = () => {
     try {
       console.log("mappedCompany", mappedCompany); // Logs the object with the new keys
       // API call to add the new company
-      const response = await fetch('https://dyhbv4khoh.execute-api.ap-northeast-1.amazonaws.com/dev/company', {
+      const response = await fetch('https://0jdf7qckt2.execute-api.ap-northeast-1.amazonaws.com/dev/company', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -263,7 +263,7 @@ const resetCompanyData = () => {
       console.log("INSERT mappedShop", mappedShop); // Logs the object with the new keys
 
       // API call to add the new shop
-      const response = await fetch(`https://dyhbv4khoh.execute-api.ap-northeast-1.amazonaws.com/dev/shop/${relating_company_id}`, {
+      const response = await fetch(`https://0jdf7qckt2.execute-api.ap-northeast-1.amazonaws.com/dev/shop/${relating_company_id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -283,7 +283,7 @@ const resetCompanyData = () => {
       const shop_id_for_link = addedShops.shop_id
 
       console.log("!!!--shop_id_for_link--!!!", shop_id_for_link);
-      const link_response = await fetch(`https://dyhbv4khoh.execute-api.ap-northeast-1.amazonaws.com/dev/survey-link/${relating_company_id}/${shop_id_for_link}`, {
+      const link_response = await fetch(`https://0jdf7qckt2.execute-api.ap-northeast-1.amazonaws.com/dev/survey-link/${relating_company_id}/${shop_id_for_link}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -335,7 +335,7 @@ const resetCompanyData = () => {
         shopInCompany.contract = 'cancel';
 
         // TODO Make the API request to delete the company /shop/temp_status_changes/{company_id}/{shop_id}/{contract}
-        const response = await fetch(`https://dyhbv4khoh.execute-api.ap-northeast-1.amazonaws.com/dev/shop/temp_status_changes/${shopInCompany.company_id}/${shopInCompany.shop_id}/${shopInCompany.contract}`, {
+        const response = await fetch(`https://0jdf7qckt2.execute-api.ap-northeast-1.amazonaws.com/dev/shop/temp_status_changes/${shopInCompany.company_id}/${shopInCompany.shop_id}/${shopInCompany.contract}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -409,7 +409,7 @@ const resetCompanyData = () => {
     };
 
     try {
-      const response = await fetch(`https://dyhbv4khoh.execute-api.ap-northeast-1.amazonaws.com/dev/shop/${company_id}/${shop_id}`, {
+      const response = await fetch(`https://0jdf7qckt2.execute-api.ap-northeast-1.amazonaws.com/dev/shop/${company_id}/${shop_id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

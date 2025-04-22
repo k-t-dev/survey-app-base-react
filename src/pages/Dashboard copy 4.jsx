@@ -24,7 +24,7 @@ const Dashboard = () => {
       setLoading(true); // データ取得開始時にローディングをtrueに
       setError(null); // エラー状態をリセット
       try {
-        const response = await fetch(`https://dyhbv4khoh.execute-api.ap-northeast-1.amazonaws.com/dev/survey-results/${companyId}/${shopId}`, {
+        const response = await fetch(`https://0jdf7qckt2.execute-api.ap-northeast-1.amazonaws.com/dev/survey-results/${companyId}/${shopId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

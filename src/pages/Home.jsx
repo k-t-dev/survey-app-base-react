@@ -15,8 +15,8 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const [companiesResponse, shopsResponse] = await Promise.all([
-          axios.get("https://dyhbv4khoh.execute-api.ap-northeast-1.amazonaws.com/dev/companies"),
-          axios.get("https://dyhbv4khoh.execute-api.ap-northeast-1.amazonaws.com/dev/shops")
+          axios.get("https://0jdf7qckt2.execute-api.ap-northeast-1.amazonaws.com/dev/companies"),
+          axios.get("https://0jdf7qckt2.execute-api.ap-northeast-1.amazonaws.com/dev/shops")
         ]);
 
         // 取得した企業名をアルファベット順にソート

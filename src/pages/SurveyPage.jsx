@@ -17,7 +17,7 @@ const SurveyPage = () => {
   useEffect(() => {
     const fetchSurveyData = async () => {
       try {
-        const response = await fetch(`https://dyhbv4khoh.execute-api.ap-northeast-1.amazonaws.com/dev/survey/${companyId}/${shopId}`);
+        const response = await fetch(`https://0jdf7qckt2.execute-api.ap-northeast-1.amazonaws.com/dev/survey/${companyId}/${shopId}`);
         if (!response.ok) throw new Error("Failed to fetch survey data");
         const data = await response.json();
 
@@ -95,7 +95,7 @@ const SurveyPage = () => {
     };
 
     try {
-      const response = await fetch("https://dyhbv4khoh.execute-api.ap-northeast-1.amazonaws.com/dev/survey-results/general/", {
+      const response = await fetch("https://0jdf7qckt2.execute-api.ap-northeast-1.amazonaws.com/dev/survey-results/general/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(surveyPayload),
