@@ -186,7 +186,7 @@ const SurveyEditor = ({ companyId, shopId }) => {
     console.log(payload)
 
     try {
-      const response = await fetch(`https://0jdf7qckt2.execute-api.ap-northeast-1.amazonaws.com/dev/survey/`, {
+      const response = await fetch(`https://0jdf7qckt2.execute-api.ap-northeast-1.amazonaws.com/dev/survey`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
