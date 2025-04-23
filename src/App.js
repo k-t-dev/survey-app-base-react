@@ -7,9 +7,9 @@ import SurveyEdit from "./pages/SurveyEdit";
 
 import SurveyPage from "./pages/SurveyPage";
 import SurevyCommentPage from "./pages/SurevyCommentPage";
+import SurveyLink from "./pages/SurveyLinkPage";
 
 function App() {
-
 
   //Set API Key here
   return (
@@ -22,6 +22,7 @@ function App() {
         <Route path="/survey-app/survey-edit/:companyId/:shopId" element={<SurveyEdit />} />
         <Route path="/survey-app/survey-preview/:companyId/:shopId" element={<SurveyPage />} />
         <Route path="/survey-app/survey-preview/comment/:companyId/:shopId" element={<SurevyCommentPage />} />
+        <Route path="/survey-app/survey-link/:companyId/:shopId" element={<SurveyLink />} />
 
       </Routes>
     </Router>

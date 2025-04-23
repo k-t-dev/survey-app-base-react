@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Modal from "react-modal";
 import { CSVLink } from "react-csv";
+import './EditCompanies.css';
 
 
 // モーダルのアクセシビリティ設定
@@ -9,9 +10,9 @@ Modal.setAppElement("#root");
 
 const ManageInfo = () => {
 
-  const companyTableColumns = { 会社名: "", 会社住所: "", 会社連絡先: "", 代表者: "", メモ: "" };
-  const shopTableColumns = { 店舗名: "", 店舗住所: "", 会社連絡先:"", 代表者:"", 契約開始日: "", 契約終了日: "", 担当者:"", メモ:""};
-  // const shopTableColumns = { 店舗名: "", 店舗住所: "", 会社連絡先:"", 代表者:"", 契約開始日: "", 契約終了日: "", 担当者:"", アンケートリンク: "", Google評価リンク: "" , メモ:""};
+  const companyTableColumns = { 会社名: "", 会社住所: "", メールアドレス: "", 代表者: "", メモ: "" };
+  const shopTableColumns = { 店舗名: "", 店舗住所: "", メールアドレス:"", 代表者:"", 契約開始日: "", 契約終了日: "", 担当者:"", メモ:""};
+  // const shopTableColumns = { 店舗名: "", 店舗住所: "", メールアドレス:"", 代表者:"", 契約開始日: "", 契約終了日: "", 担当者:"", アンケートリンク: "", Google評価リンク: "" , メモ:""};
   const [viewMode, setViewMode] = useState("company");
   const [editingCompany, setEditingCompany] = useState(null);
   const [editingShop, setEditingShop] = useState(null);
@@ -68,7 +69,7 @@ const ManageInfo = () => {
     const mappedCompanyForUI = {
       "会社名": companyToEdit.company_name,
       "会社住所": companyToEdit.company_address,
-      "会社連絡先": companyToEdit.company_contact_address,
+      "メールアドレス": companyToEdit.company_contact_address,
       "代表者": companyToEdit.company_owner_name,
       "メモ": companyToEdit.remarks,
     };
@@ -128,7 +129,7 @@ const resetCompanyData = () => {
     const updatedCompanyPayload = {
       company_name: updatedCompany.会社名,
       company_address: updatedCompany.会社住所,
-      company_contact_address: updatedCompany.会社連絡先,
+      company_contact_address: updatedCompany.メールアドレス,
       company_owner_name: updatedCompany.代表者,
       remarks: updatedCompany.メモ,
     };
@@ -182,7 +183,7 @@ const resetCompanyData = () => {
     const mappedCompany = {
       company_name: newCompanyData.会社名,
       company_address: newCompanyData.会社住所,
-      company_contact_address: newCompanyData.会社連絡先,
+      company_contact_address: newCompanyData.メールアドレス,
       company_owner_name: newCompanyData.代表者,
       remarks: newCompanyData.メモ,
     };
@@ -250,7 +251,7 @@ const resetCompanyData = () => {
     const mappedShop = {
       shop_name: newShopData.店舗名,
       shop_owner_name: newShopData.店舗住所,
-      shop_contact_address: newShopData.会社連絡先,
+      shop_contact_address: newShopData.メールアドレス,
       shop_location: newShopData.代表者,
       start_contract_date: newShopData.契約開始日,
       end_contract_date: newShopData.契約終了日,
@@ -372,7 +373,7 @@ const resetCompanyData = () => {
     const mappedShopForUI = {
       "店舗名": shopToEdit.shop_name,
       "店舗住所": shopToEdit.shop_location,
-      "会社連絡先": shopToEdit.shop_contact_address,
+      "メールアドレス": shopToEdit.shop_contact_address,
       "代表者": shopToEdit.shop_owner_name,
       "契約開始日": shopToEdit.start_contract_date,
       "契約終了日": shopToEdit.end_contract_date,
@@ -400,7 +401,7 @@ const resetCompanyData = () => {
     const updatedShopPayload = {
       shop_name: updatedShop.店舗名,
       shop_location: updatedShop.店舗住所,
-      shop_contact_address: updatedShop.会社連絡先,
+      shop_contact_address: updatedShop.メールアドレス,
       shop_owner_name: updatedShop.代表者,
       start_contract_date: updatedShop.契約開始日,
       end_contract_date: updatedShop.契約終了日,
@@ -467,14 +468,14 @@ const resetCompanyData = () => {
               data={companies.map(company => ({
                 会社名: company.company_name,
                 会社住所: company.company_address,
-                会社連絡先: company.company_contact_address,
+                メールアドレス: company.company_contact_address,
                 代表者: company.company_owner_name,
                 メモ: company.remarks,
               }))}
               headers={[
                 { label: "会社名", key: "会社名" },
                 { label: "会社住所", key: "会社住所" },
-                { label: "会社連絡先", key: "会社連絡先" },
+                { label: "メールアドレス", key: "メールアドレス" },
                 { label: "代表者", key: "代表者" },
                 { label: "メモ", key: "メモ" },
               ]}
@@ -494,29 +495,30 @@ const resetCompanyData = () => {
             .sort((a, b) => a.company_name.localeCompare(b.company_name)) // 会社名で昇順ソート
             .map((company, index) => (
               <div key={company.id} style={{ marginBottom: "20px" }}>
-                <table border="1" style={{ width: "100%", borderCollapse: "collapse", marginTop: "10px" }}>
+
+                <table border="1" style={{ width: "100%", borderCollapse: "collapse", marginTop: "10px", tableLayout: "fixed" }}>
                   <thead>
                     <tr style={{ backgroundColor: "#f1f1f1" }}>
-                      <th>会社名</th>
-                      <th>代表者の名前</th>
-                      <th>会社住所</th>
-                      <th>会社連絡先</th>
-                      <th>メモ</th>
-                      <th>アクション</th>
+                      <th style={{ width: "15%" }}>会社名</th>
+                      <th style={{ width: "15%" }}>代表者の名前</th>
+                      <th style={{ width: "25%" }}>会社住所</th>
+                      <th style={{ width: "20%" }}>メールアドレス</th>
+                      <th style={{ width: "15%" }}>メモ</th>
+                      <th style={{ width: "10%" }}>アクション</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>{company.company_name}</td>
-                      <td>{company.company_owner_name}</td>
-                      <td>{company.company_address}</td>
-                      <td>{company.company_contact_address}</td>
-                      <td>{company.remarks}</td>
-                      <td style={{ textAlign: "center" }}>
-                        <button onClick={() => handleEditCompanyModalContents(index)} style={{ marginRight: "5px", backgroundColor: "#ffc107", padding: "5px 10px", borderRadius: "5px" }}>編集</button>
-                        <button onClick={() => handleDeleteCompany(index)} style={{ backgroundColor: "#dc3545", padding: "5px 10px", borderRadius: "5px", color: "#fff" }}>削除</button>
-                      </td>
-                    </tr>
+                  <tr>
+                    <td style={{ whiteSpace: "normal", wordBreak: "break-word" }}>{company.company_name}</td>
+                    <td style={{ whiteSpace: "normal", wordBreak: "break-word" }}>{company.company_owner_name}</td>
+                    <td style={{ whiteSpace: "normal", wordBreak: "break-word" }}>{company.company_address}</td>
+                    <td style={{ whiteSpace: "normal", wordBreak: "break-word" }}>{company.company_contact_address}</td>
+                    <td style={{ whiteSpace: "normal", wordBreak: "break-word" }}>{company.remarks}</td>
+                    <td style={{ textAlign: "center" }}>
+                      <button onClick={() => handleEditCompanyModalContents(index)} style={{ marginRight: "5px", backgroundColor: "#ffc107", padding: "5px 10px", borderRadius: "5px" }}>編集</button>
+                      <button onClick={() => handleDeleteCompany(index)} style={{ backgroundColor: "#dc3545", padding: "5px 10px", borderRadius: "5px", color: "#fff" }}>削除</button>
+                    </td>
+                  </tr>
                   </tbody>
                 </table>
               </div>
@@ -538,7 +540,7 @@ const resetCompanyData = () => {
                 会社名: company?.company_name || "",
                 店舗名: shop.shop_name,
                 店舗住所: shop.shop_location,
-                会社連絡先: shop.shop_contact_address,
+                メールアドレス: shop.shop_contact_address,
                 代表者: shop.shop_owner_name,
                 契約開始日: shop.start_contract_date,
                 契約終了日: shop.end_contract_date,
@@ -552,7 +554,7 @@ const resetCompanyData = () => {
               { label: "会社名", key: "会社名" },
               { label: "店舗名", key: "店舗名" },
               { label: "店舗住所", key: "店舗住所" },
-              { label: "会社連絡先", key: "会社連絡先" },
+              { label: "メールアドレス", key: "メールアドレス" },
               { label: "代表者", key: "代表者" },
               { label: "契約開始日", key: "契約開始日" },
               { label: "契約終了日", key: "契約終了日" },
@@ -579,21 +581,28 @@ const resetCompanyData = () => {
                 <button onClick={() => { setShopAddTargetIndex(companyIndex); setEditingShop(null); setIsShopModalOpen(true); }} style={{ padding: "8px 15px", backgroundColor: "#28a745", color: "#fff", borderRadius: "5px" }}>
                   新規店舗追加
                 </button>
-
-                <table border="1" style={{ width: "100%", marginTop: "10px", borderCollapse: "collapse" }}>
+                <table
+                  border="1"
+                  style={{
+                    width: "100%",
+                    marginTop: "10px",
+                    borderCollapse: "collapse",
+                    tableLayout: "fixed" // ← セル幅を固定
+                  }}
+                >
                   <thead>
                     <tr style={{ backgroundColor: "#f1f1f1" }}>
-                      <th>店舗名</th>
-                      <th>店舗住所</th>
-                      <th>会社連絡先</th>
-                      <th>代表者</th>
-                      <th>契約開始日</th>
-                      <th>契約終了日</th>
-                      <th>担当者</th>
-                      <th>メモ</th>
-                      <th>アンケートリンク</th>
-                      <th>Google評価リンク</th>
-                      <th>アクション</th>
+                      <th style={{ width: "10%" }}>店舗名</th>
+                      <th style={{ width: "15%" }}>店舗住所</th>
+                      <th style={{ width: "15%" }}>メールアドレス</th>
+                      <th style={{ width: "10%" }}>代表者</th>
+                      <th style={{ width: "10%" }}>契約開始日</th>
+                      <th style={{ width: "10%" }}>契約終了日</th>
+                      <th style={{ width: "10%" }}>担当者</th>
+                      <th style={{ width: "10%" }}>メモ</th>
+                      <th style={{ width: "20%" }}>アンケートリンク</th>
+                      <th style={{ width: "20%" }}>Google評価リンク</th>
+                      <th style={{ width: "10%" }}>アクション</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -608,12 +617,53 @@ const resetCompanyData = () => {
                           <td>{shop.end_contract_date}</td>
                           <td>{shop.in_charge}</td>
                           <td>{shop.remarks}</td>
-                        
-                          <td><a href={shop.survey_link} target="_blank" rel="noopener noreferrer">{shop.survey_link}</a></td>
-                          <td><a href={shop.google_review_link} target="_blank" rel="noopener noreferrer">{shop.google_review_link}</a></td>
+                          
+                          <td className="link-cell" title={shop.survey_link}>
+                          <a
+                            href={shop.survey_link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="link-text"
+                          >
+                            {shop.survey_link}
+                          </a>
+                        </td>
+
+                        <td className="link-cell" title={shop.google_review_link}>
+                          <a
+                            href={shop.google_review_link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="link-text"
+                          >
+                            {shop.google_review_link}
+                          </a>
+                        </td>
+
+
                           <td>
-                            <button onClick={() => handleEditShopModalContents(companyIndex, shop.shop_id)} style={{ marginRight: "5px", backgroundColor: "#ffc107", padding: "5px 10px", borderRadius: "5px" }}>編集</button>
-                            <button onClick={() => handleDeleteShop(companyIndex, shop.shop_id)} style={{ backgroundColor: "#dc3545", color: "#fff", padding: "5px 10px", borderRadius: "5px" }}>削除</button>
+                            <button
+                              onClick={() => handleEditShopModalContents(companyIndex, shop.shop_id)}
+                              style={{
+                                marginRight: "5px",
+                                backgroundColor: "#ffc107",
+                                padding: "5px 10px",
+                                borderRadius: "5px"
+                              }}
+                            >
+                              編集
+                            </button>
+                            <button
+                              onClick={() => handleDeleteShop(companyIndex, shop.shop_id)}
+                              style={{
+                                backgroundColor: "#dc3545",
+                                color: "#fff",
+                                padding: "5px 10px",
+                                borderRadius: "5px"
+                              }}
+                            >
+                              削除
+                            </button>
                           </td>
                         </tr>
                       ))

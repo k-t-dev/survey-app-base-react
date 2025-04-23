@@ -1,0 +1,116 @@
+/* Container for the whole component */
+.survey-link-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 20px auto;
+  }
+  
+  /* Title styling */
+  .title {
+    font-size: 28px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Section for company and shop information */
+  .info-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .company-info, .shop-info {
+    margin-bottom: 20px;
+  }
+
+  
+  h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    font-size: 16px;
+    color: #666;
+  }
+  
+  /* Survey Link section */
+  .survey-link {
+    margin-top: 20px;
+  }
+  
+  .survey-link a {
+    font-size: 18px;
+    color: #0066cc;
+    text-decoration: none;
+  }
+
+  .survey-link-section {
+    background-color: #f4f7fc;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+  
+  .survey-link a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Google Link section */
+  .google-link-section {
+    margin-top: 40px;
+  }
+  
+  .google-link-section a {
+    font-size: 18px;
+    color: #0066cc;
+    text-decoration: none;
+  
+    word-break: break-all;        /* 単語途中でも折り返す */
+    overflow-wrap: anywhere;      /* 自然な位置で改行 */
+    display: inline-block;        /* max-width を効かせる */
+    max-width: 100%;              /* 親要素からはみ出さない */
+  }
+  
+  
+  
+  .google-link-section a:hover {
+    text-decoration: underline;
+  }
+  
+  /* QR Code container */
+  .qr-code-container {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .qr-code-container canvas {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    margin-top: 10px;
+  }
+  
+  /* Loading and Error state styles */
+  .loading, .error {
+    text-align: center;
+    font-size: 18px;
+    color: #999;
+  }
+  
+
+  .dashboard-layout {
+    display: flex;
+  }
+  
+  .dashboard-content {
+    flex: 1;
+    padding: 20px;
+  }
+  
