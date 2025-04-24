@@ -328,7 +328,6 @@ const Dashboard = () => {
                 <Legend />
                 <Bar dataKey="count" fill={colors[0]} name="回答数" />
               </BarChart>
-
               {/* Pie Chart: Distribution of Answers (Filtered by Time) */}
               <div className="chart-title">回答の割合</div>
               <PieChart width={400} height={300}>
@@ -363,6 +362,7 @@ const Dashboard = () => {
             <div className="feedback-display">
               <div className="feedback-table-container">
                 <table className="feedback-table">
+
                   <thead>
                     <tr>
                       <th onClick={() => handleSort("answer_time")}>
@@ -371,24 +371,42 @@ const Dashboard = () => {
                           <span>{sortConfig.direction === "ascending" ? " ▲" : " ▼"}</span>
                         )}
                       </th>
+                      <th>コメント</th>
+                      <th>評価</th>
+                    </tr>
+                    <tr>
+                      <th></th> {/* 回答日時の列はフィルター不要なら空 */}
                       <th>
-                        コメント
                         <input
                           type="text"
                           name="comment"
                           value={filters.comment || ""}
                           onChange={handleFilterChange}
                           placeholder="フィルター"
+                          style={{
+                            width: "100%",
+                            height: "24px",
+                            fontSize: "12px",
+                            padding: "2px 6px",
+                            boxSizing: "border-box"
+                          }}
+                        
                         />
                       </th>
                       <th>
-                        評価
                         <input
                           type="text"
                           name="star"
                           value={filters.star || ""}
                           onChange={handleFilterChange}
                           placeholder="フィルター"
+                          style={{
+                            width: "100%",
+                            height: "24px",
+                            fontSize: "12px",
+                            padding: "2px 6px",
+                            boxSizing: "border-box"
+                          }}
                         />
                       </th>
                     </tr>

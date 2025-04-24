@@ -284,3 +284,34 @@
   border-spacing: 0;
   font-size: 0.9em;
 }
+
+
+.feedback-table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.feedback-table th,
+.feedback-table td {
+  padding: 8px;
+  border: 1px solid #ccc;
+  word-wrap: break-word; /* 長い単語を折り返す */
+  white-space: normal;   /* 自動的に改行させる */
+}
+
+/* 各列の幅指定 */
+.feedback-table th:nth-child(1),
+.feedback-table td:nth-child(1) {
+  width: 160px; /* 回答日時 */
+}
+
+.feedback-table th:nth-child(2),
+.feedback-table td:nth-child(2) {
+  width: 300px; /* コメント */
+}
+
+.feedback-table th:nth-child(3),
+.feedback-table td:nth-child(3) {
+  width: 100px; /* 評価 */
+}

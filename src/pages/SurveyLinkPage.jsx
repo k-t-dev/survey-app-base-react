@@ -63,8 +63,7 @@ const SurveyLink = () => {
 
     return (
       <div className="survey-link-container">
-        <h1 className="title">アンケートリンク</h1>
-
+        <h1 className="title">登録情報</h1>
         <div className="info-section">
           <div className="company-info">
             <h2>会社情報</h2>

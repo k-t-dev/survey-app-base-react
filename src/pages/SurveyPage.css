@@ -68,6 +68,19 @@ button {
   transition: background-color 0.3s ease, opacity 0.3s ease;
 }
 
+
+.survey-form {
+  background-color: #fff;
+  border: 1px solid #ccc;          /* 枠線 */
+  border-radius: 8px;              /* 角丸 */
+  padding: 20px;                   /* 内側の余白 */
+  max-width: 400px;                /* 最大幅 */
+  width: 90%;                      /* 小さい画面対応 */
+  margin: 0 auto;                  /* 中央寄せ */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* 軽い影 */
+}
+
+
 /* Media Queries for Mobile */
 @media (max-width: 768px) {
   .survey-container {
@@ -99,10 +112,11 @@ button {
 }
 
 
-/* Mobile styles for popup */
+/* モバイルスタイル */
 @media (max-width: 768px) {
   .popup-content {
     width: 90%;
+    max-width: 340px; /* 幅ギリギリを避ける */
     padding: 20px 15px;
     font-size: 0.95rem;
   }
@@ -114,8 +128,7 @@ button {
   }
 }
 
-
-
+/* 共通スタイル */
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -134,8 +147,10 @@ button {
   padding: 30px 20px;
   border-radius: 8px;
   text-align: center;
-  max-width: 90%;
+  max-width: 400px; /* 幅に制限を入れて余白をつくる */
+  width: 90%; /* モバイル対応 */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border: 1px solid #ccc; /* 枠を追加 */
 }
 
 .popup-button {
