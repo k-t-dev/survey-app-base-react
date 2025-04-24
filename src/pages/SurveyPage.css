@@ -1,12 +1,6 @@
-/* .survey-container {
-  padding: 20px;
-  max-width: 600px;
-  margin: 0 auto;
-} */
-
 
 .survey-container {
-  padding: 200px;
+  padding: 100px;
   font-family: 'Arial', sans-serif;
   background-color: #f4f4f9;
   margin-left: 240px; /* MenuBar の幅 (200px) + padding (左右20px) */
@@ -39,7 +33,7 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 98%;
   font-size: 1rem;
   margin-bottom: 8px;
   cursor: pointer;
@@ -73,8 +67,8 @@ button {
   background-color: #fff;
   border: 1px solid #ccc;          /* 枠線 */
   border-radius: 8px;              /* 角丸 */
-  padding: 20px;                   /* 内側の余白 */
-  max-width: 400px;                /* 最大幅 */
+  padding: 40px;                   /* 内側の余白 */
+  max-width: 800px;                /* 最大幅 */
   width: 90%;                      /* 小さい画面対応 */
   margin: 0 auto;                  /* 中央寄せ */
   box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* 軽い影 */
@@ -109,11 +103,7 @@ button {
     font-size: 1.1rem;
     padding: 15px;
   }
-}
 
-
-/* モバイルスタイル */
-@media (max-width: 768px) {
   .popup-content {
     width: 90%;
     max-width: 340px; /* 幅ギリギリを避ける */
@@ -126,7 +116,9 @@ button {
     padding: 10px 15px;
     width: 100%;
   }
+
 }
+
 
 /* 共通スタイル */
 .popup-overlay {
