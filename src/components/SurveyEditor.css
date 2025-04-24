@@ -81,16 +81,20 @@
   }
   
   /* ボタン */
-  .add-option-btn, .add-question-btn, .save-btn {
+/* ボタン */
+  .add-option-btn,
+  .add-question-btn,
+  .save-btn {
     padding: 10px 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
+    background-color: #ffffff;     /* 白背景 */
+    color: #007bff;                /* 青文字 */
+    border: 2px solid #007bff;     /* 青枠 */
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
     margin-top: 10px;
   }
+
   
   .add-option-btn:hover, .add-question-btn:hover, .save-btn:hover {
     background-color: #0056b3;
@@ -112,4 +116,57 @@
     color: #555;
     margin-top: 4px;
   }
+  
+  
+  .button-row {
+    text-align: right;
+    margin-top: 10px;
+  }
+  
+  .add-question-btn {
+    width: 100px;
+    padding: 6px;
+    font-size: 14px;
+    background-color: #fff;         /* 背景 白 */
+    color: #2196F3;                 /* 文字 青 */
+    border: 2px solid #2196F3;      /* 枠線 青 */
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .add-question-btn:hover {
+    background-color: #2196F3;     /* ホバー時：背景 青 */
+    color: white;                  /* ホバー時：文字 白 */
+  }
+  
+  
+  .save-btn-container {
+    text-align: center;
+    margin-top: 20px; /* 一段下に見せるための余白 */
+  }
+  
+  .save-btn {
+    width: 100px;
+    padding: 6px;
+    font-size: 14px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  
+  .save-btn {
+    width: 100px;
+    padding: 6px;
+    font-size: 14px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
   

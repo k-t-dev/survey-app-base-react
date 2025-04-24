@@ -486,9 +486,23 @@ const resetCompanyData = () => {
           </CSVLink>
         </div>
 
-          <button onClick={() => { setEditingCompany(null); setIsCompanyModalOpen(true); }} style={{ padding: "10px 20px", backgroundColor: "#28a745", color: "#fff", border: "none", borderRadius: "5px", cursor: "pointer" }}>
-            新規企業追加
-          </button>
+        <button
+          onClick={() => {
+            setEditingCompany(null);
+            setIsCompanyModalOpen(true);
+          }}
+          style={{
+            padding: "10px 20px",
+            backgroundColor: "#ffffff",        // 白背景
+            color: "#007bff",                  // 青文字
+            border: "2px solid #007bff",       // 青い枠線
+            borderRadius: "5px",
+            cursor: "pointer"
+          }}
+        >
+          ＋新規企業追加
+        </button>
+
 
           {/* 会社名でソート */}
           {companies
@@ -578,9 +592,17 @@ const resetCompanyData = () => {
             return (
               <div key={company.id} style={{ marginBottom: "20px" }}>
                 <h3>{company.company_name} の店舗情報</h3>
-                <button onClick={() => { setShopAddTargetIndex(companyIndex); setEditingShop(null); setIsShopModalOpen(true); }} style={{ padding: "8px 15px", backgroundColor: "#28a745", color: "#fff", borderRadius: "5px" }}>
-                  新規店舗追加
+                <button
+                  onClick={() => {
+                    setShopAddTargetIndex(companyIndex);
+                    setEditingShop(null);
+                    setIsShopModalOpen(true);
+                  }}
+                  className="new-shop-button"
+                >
+                  ＋新規店舗追加
                 </button>
+
                 <table
                   border="1"
                   style={{

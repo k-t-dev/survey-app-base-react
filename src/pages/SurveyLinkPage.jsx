@@ -80,7 +80,7 @@ const SurveyLink = () => {
 
           {shopData.google_review_link && (
             <div className="google-link-section">
-              <h3>Googleリンク</h3>
+              <h3>Googleレビューリンク</h3>
               <a href={shopData.google_review_link} target="_blank" rel="noopener noreferrer">
                 {shopData.google_review_link}
               </a>

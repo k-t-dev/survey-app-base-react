@@ -289,18 +289,21 @@ const SurveyEditor = ({ companyId, shopId }) => {
                   </button>
                 </div>
               ))}
+              
               <button onClick={() => addOption(q.id)} className="add-option-btn">
-                選択肢を追加
+                +選択肢を追加
               </button>
             </div>
           ))}
-        <button
-          onClick={addQuestion}
-          disabled={survey.length >= 10}
-          className="add-question-btn"
-        >
-          質問を追加
-        </button>
+        <div className="button-row">
+          <button
+            onClick={addQuestion}
+            disabled={survey.length >= 10}
+            className="add-question-btn"
+          >
+            +質問を追加
+          </button>
+        </div>
       </div>
 
       <div className="save-btn-container">

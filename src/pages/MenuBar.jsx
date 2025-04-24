@@ -50,6 +50,7 @@ const MenuBar = () => {
     { to: `/survey-app/survey-edit/${companyId}/${shopId}`, label: 'アンケート編集' },
     { to: `/survey-app/survey-preview/${companyId}/${shopId}`, label: 'アンケートプレビュー' },
     { to: `/survey-app/survey-link/${companyId}/${shopId}`, label: '登録情報' },  // Added Survey Link page
+    { to: `/survey-app/home`, label: 'ホームに戻る' },  // Added Survey Link page　
     // 他のメニュー項目もここに追加できる
   ];
 
