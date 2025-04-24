@@ -99,6 +99,23 @@ button {
 }
 
 
+/* Mobile styles for popup */
+@media (max-width: 768px) {
+  .popup-content {
+    width: 90%;
+    padding: 20px 15px;
+    font-size: 0.95rem;
+  }
+
+  .popup-button {
+    font-size: 1rem;
+    padding: 10px 15px;
+    width: 100%;
+  }
+}
+
+
+
 .popup-overlay {
   position: fixed;
   top: 0;
