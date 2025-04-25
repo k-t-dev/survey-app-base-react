@@ -445,6 +445,14 @@ const resetCompanyData = () => {
   // ~~~~~~~~~~~~~~~~~~~~ HTML ~~~~~~~~~~~~~~~~~~~~
   return (
     <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "20px", fontFamily: "'Arial', sans-serif", color: "#333" }}>
+      
+    {/* ホームに戻るボタン */}
+    <div className="back-button-wrapper">
+      <a href="/survey-app/home" className="back-button">
+        →ホームに戻る
+      </a>
+    </div>
+
       <h1 style={{ textAlign: "center", color: "#007bff" }}>企業および店舗情報の管理</h1>
 
       {/* ビューモード切り替え */}

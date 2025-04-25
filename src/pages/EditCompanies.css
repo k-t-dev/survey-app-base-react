@@ -29,3 +29,27 @@
     cursor: pointer;
   }
   
+
+  .back-button-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+  }
+  
+  .back-button {
+    padding: 6px 12px;
+    background-color: #ffffff;
+    color: #007bff;
+    text-decoration: none;
+    border: none;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  
+  .back-button:hover {
+    color: #0056b3;
+  }
+  
