@@ -98,11 +98,13 @@ const SurveyPage = () => {
     };
 
     try {
-      const response = await fetch("https://0jdf7qckt2.execute-api.ap-northeast-1.amazonaws.com/dev/survey-results/general", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(surveyPayload),
-      });
+      // const response = await fetch("https://0jdf7qckt2.execute-api.ap-northeast-1.amazonaws.com/dev/survey-results/general", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(surveyPayload),
+      // });
+
+      const response = { ok: true };//プレビューなのでPOSTはなし
 
       if (!response.ok) throw new Error("Failed to submit survey data");
 
