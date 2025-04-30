@@ -24,7 +24,7 @@ const SurveyPage = () => {
         if (!response.ok) throw new Error("Failed to fetch survey data");
         const data = await response.json();
 
-        console.log("GET SURVEY DATA", data);
+        // console.log("GET SURVEY DATA", data);
 
         // 質問ごとに選択肢をグループ化
         const groupedQuestions = {};
@@ -106,7 +106,7 @@ const SurveyPage = () => {
 
       if (!response.ok) throw new Error("Failed to submit survey data");
 
-      console.log("送信されたアンケートデータ:", surveyPayload);
+      // console.log("送信されたアンケートデータ:", surveyPayload);
 
       const firstQuestionResponse = surveyPayload.results.find(
         (res) => res.first_question === "Yes"

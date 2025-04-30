@@ -8,8 +8,8 @@ import MenuBar from "./MenuBar"; // Import the MenuBar component
 const SurveyEdit = () => {
   const { companyId, shopId } = useParams();
 
-  console.log("companyId:", companyId);
-  console.log("shopId:", shopId);
+  // console.log("companyId:", companyId);
+  // console.log("shopId:", shopId);
 
   return (
     <div>

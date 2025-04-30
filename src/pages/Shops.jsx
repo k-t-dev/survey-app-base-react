@@ -23,9 +23,9 @@ const Shops = () => {
     }
   }, [initialShops]);
 
-  console.log("companyName", companyName)
-  console.log("RRRRRRRR", location)
-  console.log("UUUUUUUU", shops)
+  // console.log("companyName", companyName)
+  // console.log("RRRRRRRR", location)
+  // console.log("UUUUUUUU", shops)
 
   return (
     <div className="shops-container">

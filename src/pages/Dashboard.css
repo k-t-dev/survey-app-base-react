@@ -315,3 +315,33 @@
 .feedback-table td:nth-child(3) {
   width: 100px; /* 評価 */
 }
+
+
+.feedback-display {
+  display: flex;
+  gap: 16px;
+}
+
+.feedback-table-scroll-container {
+  flex: 1;
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+}
+
+.feedback-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.feedback-table th, .feedback-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  font-size: 14px;
+}
+
+.star-pie-chart {
+  width: 300px;
+  flex-shrink: 0;
+}
+

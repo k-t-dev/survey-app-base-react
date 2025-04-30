@@ -20,9 +20,6 @@ import moment from "moment"; // Moment.js for easier date manipulation
 
 const Dashboard = () => {
   const { companyId, shopId } = useParams();
-
-  console.log("shopId in DashBoard", shopId);
-
   const [timeFrame, setTimeFrame] = useState("month");
   const [customStartDate, setCustomStartDate] = useState("");
   const [customEndDate, setCustomEndDate] = useState("");
@@ -32,7 +29,6 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true); // ローディング状態を追加
   const [error, setError] = useState(null); // エラー状態を追加
   const [feedbackData, setFeedbackData] = useState([]); // first_questionがtrueのデータを格納
-  const [starCounts, setStarCounts] = useState({}); // Starの数をカウント
   const [sortConfig, setSortConfig] = useState({ key: "answer_time", direction: "descending" }); // 初期ソート設定
   const [filters, setFilters] = useState({}); // フィルターの状態
 
@@ -51,11 +47,11 @@ const Dashboard = () => {
           }
         );
 
-        console.log("response", response);
+        // console.log("response", response);
 
         if (response.ok) {
           const data = await response.json();
-          console.log("Fetched Data:", data);
+          // console.log("Fetched Data:", data);
           setAllData(data);
 
           // Extract unique questions from the data
@@ -81,20 +77,11 @@ const Dashboard = () => {
           const feedback = data.filter((item) => item.first_question);
           setFeedbackData(feedback);
 
-          // Count the occurrences of each star rating
-          const stars = {};
-          feedback.forEach((item) => {
-            if (item.star) {
-              stars[item.star] = (stars[item.star] || 0) + 1;
-            }
-          });
-          setStarCounts(stars);
         } else if (response.status === 404) {
           // データが存在しない場合
           setAllData([]);
           setQuestions([]);
           setFeedbackData([]);
-          setStarCounts({});
         } else {
           console.error("サーバーエラー:", response.status);
           setError(`サーバーエラー: ${response.status}`);
@@ -119,35 +106,35 @@ const Dashboard = () => {
     { value: "all", label: "📅 全期間" },
   ];
 
-  const filterDataByTimeFrame = () => {
-    let filteredData = allData;
+  const filterDataByTimeFrame = (data) => {
+    let filteredData = data;
     const now = moment();
 
     switch (timeFrame) {
       case "3days":
-        filteredData = allData.filter(
+        filteredData = data.filter(
           (item) => now.diff(moment(item.answer_time), "days") < 3
         );
         break;
       case "week":
-        filteredData = allData.filter(
+        filteredData = data.filter(
           (item) => now.diff(moment(item.answer_time), "weeks") < 1
         );
         break;
       case "month":
-        filteredData = allData.filter(
+        filteredData = data.filter(
           (item) => now.diff(moment(item.answer_time), "months") < 1
         );
         break;
       case "3months":
-        filteredData = allData.filter(
+        filteredData = data.filter(
           (item) => now.diff(moment(item.answer_time), "months") < 3
         );
         break;
       case "custom":
         const start = moment(customStartDate);
         const end = moment(customEndDate);
-        filteredData = allData.filter(
+        filteredData = data.filter(
           (item) =>
             moment(item.answer_time).isSameOrAfter(start) &&
             moment(item.answer_time).isSameOrBefore(end)
@@ -161,7 +148,7 @@ const Dashboard = () => {
   };
 
   const aggregateAnswers = (questionId) => {
-    const filteredData = filterDataByTimeFrame().filter(
+    const filteredData = filterDataByTimeFrame(allData).filter(
       (item) => item.question_id === questionId
     );
     const aggregated = {};
@@ -175,7 +162,7 @@ const Dashboard = () => {
   };
 
   const prepareLineChartData = (questionId) => {
-    const filteredData = filterDataByTimeFrame().filter(
+    const filteredData = filterDataByTimeFrame(allData).filter(
       (item) => item.question_id === questionId
     );
     const timeGrouped = {};
@@ -196,7 +183,16 @@ const Dashboard = () => {
     setSortConfig({ key, direction });
   };
 
-  const sortedFeedbackData = [...feedbackData].sort((a, b) => {
+  const dayfilteredFirstQestionData = filterDataByTimeFrame(feedbackData);
+  
+  const dayFilteredStarCount = {};
+  dayfilteredFirstQestionData.forEach((item) => {
+    if (item.star) {
+      dayFilteredStarCount[item.star] = (dayFilteredStarCount[item.star] || 0) + 1;
+    }
+  });
+
+  const sortedFeedbackData = [...dayfilteredFirstQestionData].sort((a, b) => {
     if (sortConfig.key === "answer_time") {
       const dateA = moment(a.answer_time);
       const dateB = moment(b.answer_time);
@@ -355,68 +351,69 @@ const Dashboard = () => {
           </div>
         ))}
 
-        {/* Feedback Table with Sorting and Filtering */}
-        {feedbackData.length > 0 && (
-          <div className="feedback-section">
-            <h2>お客様の声</h2>
-            <div className="feedback-display">
-              <div className="feedback-table-container">
-                <table className="feedback-table">
+        <div className="feedback-section">
+          <h2>お客様の声</h2>
+          <div className="feedback-display" style={{ display: "flex", gap: "16px" }}>
+            
+            {/* テーブル（左） */}
+            <div className="feedback-table-scroll-container" style={{ flex: 1, maxHeight: "400px", overflowY: "auto", border: "1px solid #ccc" }}>
+              <table className="feedback-table" style={{ width: "100%", borderCollapse: "collapse" }}>
+                <thead>
+                  <tr>
+                    <th onClick={() => handleSort("answer_time")}>
+                      回答日時
+                      {sortConfig.key === "answer_time" && (
+                        <span>{sortConfig.direction === "ascending" ? " ▲" : " ▼"}</span>
+                      )}
+                    </th>
+                    <th>コメント</th>
+                    <th>評価</th>
+                  </tr>
+                </thead>
 
-                  <thead>
-                    <tr>
-                      <th onClick={() => handleSort("answer_time")}>
-                        回答日時
-                        {sortConfig.key === "answer_time" && (
-                          <span>{sortConfig.direction === "ascending" ? " ▲" : " ▼"}</span>
-                        )}
-                      </th>
-                      <th>コメント</th>
-                      <th>評価</th>
-                    </tr>
-                    <tr>
-                      <th></th> {/* 回答日時の列はフィルター不要なら空 */}
-                      <th>
-                        <input
-                          type="text"
-                          name="comment"
-                          value={filters.comment || ""}
-                          onChange={handleFilterChange}
-                          placeholder="フィルター"
-                          style={{
-                            width: "100%",
-                            height: "24px",
-                            fontSize: "12px",
-                            padding: "2px 6px",
-                            boxSizing: "border-box"
-                          }}
-                        
-                        />
-                      </th>
-                      <th>
-                        <input
-                          type="text"
-                          name="star"
-                          value={filters.star || ""}
-                          onChange={handleFilterChange}
-                          placeholder="フィルター"
-                          style={{
-                            width: "100%",
-                            height: "24px",
-                            fontSize: "12px",
-                            padding: "2px 6px",
-                            boxSizing: "border-box"
-                          }}
-                        />
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
+                <tbody>
+                  {/* フィルター入力行 */}
+                  <tr>
+                    <td></td>
+                    <td>
+                      <input
+                        type="text"
+                        name="comment"
+                        value={filters.comment || ""}
+                        onChange={handleFilterChange}
+                        placeholder="フィルター"
+                        style={{
+                          width: "100%",
+                          height: "24px",
+                          fontSize: "12px",
+                          padding: "2px 6px",
+                          boxSizing: "border-box"
+                        }}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        name="star"
+                        value={filters.star || ""}
+                        onChange={handleFilterChange}
+                        placeholder="フィルター"
+                        style={{
+                          width: "100%",
+                          height: "24px",
+                          fontSize: "12px",
+                          padding: "2px 6px",
+                          boxSizing: "border-box"
+                        }}
+                      />
+                    </td>
+                  </tr>
+
+                  {/* フィードバック行 */}
                   {filteredFeedbackData.map((item, index) => {
                     const comment = item.comment || "---";
                     const star = item.star || "---";
 
-                    // 両方とも "---" の場合は何も表示しない
                     if (comment === "---" && star === "---") {
                       return null;
                     }
@@ -430,41 +427,41 @@ const Dashboard = () => {
                     );
                   })}
                 </tbody>
-
-                </table>
-              </div>
-
-              {Object.keys(starCounts).length > 0 && (
-                <div className="star-pie-chart">
-                  <h3>評価分布</h3>
-                  <PieChart width={500} height={300}>
-                    <Pie
-                      data={Object.entries(starCounts).map(([star, count]) => ({
-                        star,
-                        count,
-                      }))}
-                      dataKey="count"
-                      nameKey="star"
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={60}
-                      innerRadius={0} 
-                      label={(entry) => `${entry.star}★(${(entry.percent * 100).toFixed(1)}%)`}
-                    >
-                      {Object.keys(starCounts).map((star, index) => (
-                        <Cell
-                          key={`cell-${index}`}
-                          fill={starColors[parseInt(star) - 1] || "#ccc"} // Use star-specific colors
-                        />
-                      ))}
-                    </Pie>
-                    <Legend />
-                  </PieChart>
-                </div>
-              )}
+              </table>
             </div>
+
+            {/* チャート（右） */}
+            {Object.keys(dayFilteredStarCount).length > 0 && (
+              <div className="star-pie-chart" style={{ width: "300px", flexShrink: 0 }}>
+                <h3>評価分布</h3>
+                <PieChart width={300} height={300}>
+                  <Pie
+                    data={Object.entries(dayFilteredStarCount).map(([star, count]) => ({
+                      star,
+                      count,
+                    }))}
+                    dataKey="count"
+                    nameKey="star"
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={60}
+                    innerRadius={0}
+                    label={(entry) => `${entry.star}★(${(entry.percent * 100).toFixed(1)}%)`}
+                  >
+                    {Object.keys(dayFilteredStarCount).map((star, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={starColors[parseInt(star) - 1] || "#ccc"}
+                      />
+                    ))}
+                  </Pie>
+                  <Legend />
+                </PieChart>
+              </div>
+            )}
           </div>
-        )}
+        </div>
+
       </div>
     </div>
   );

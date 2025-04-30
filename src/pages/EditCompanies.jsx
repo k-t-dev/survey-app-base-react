@@ -56,8 +56,8 @@ const ManageInfo = () => {
   if (loading) return <p>読み込み中...</p>;
   if (error) return <p>{error}</p>;
 
-  console.log('companies',companies)
-  console.log('shops',shops)
+  // console.log('companies',companies)
+  // console.log('shops',shops)
 
 
   ////  ~~~~~~~~~~~~~~~~~~~~ 企業 ~~~~~~~~~~~~~~~~~~~~
@@ -85,7 +85,7 @@ const ManageInfo = () => {
     if (isConfirmed) {
       try {
         // Set the contract to 'cancel'
-        console.log("####company###", company)
+        // console.log("####company###", company)
         company.contract = 'cancel';
 
         // TODO Make the API request to delete the company
@@ -135,10 +135,10 @@ const resetCompanyData = () => {
     };
     updatedCompanyPayload.contract = 'contract';
 
-    console.log('updatedCompanies', updatedCompanies);
-    console.log('company', company);
-    console.log('updatedCompany', updatedCompany);
-    console.log('updatedCompanyPayload', updatedCompanyPayload);
+    // console.log('updatedCompanies', updatedCompanies);
+    // console.log('company', company);
+    // console.log('updatedCompany', updatedCompany);
+    // console.log('updatedCompanyPayload', updatedCompanyPayload);
 
     // Make the API request to save the updated companies
     try {
@@ -151,7 +151,7 @@ const resetCompanyData = () => {
         body: JSON.stringify(updatedCompanyPayload),
       });
 
-      console.log('response',response)
+      // console.log('response',response)
 
       if (response.ok) {
         // Assuming the response returns a success status
@@ -189,7 +189,7 @@ const resetCompanyData = () => {
     };
 
     try {
-      console.log("mappedCompany", mappedCompany); // Logs the object with the new keys
+      // console.log("mappedCompany", mappedCompany); // Logs the object with the new keys
       // API call to add the new company
       const response = await fetch('https://0jdf7qckt2.execute-api.ap-northeast-1.amazonaws.com/dev/company', {
         method: 'POST',
@@ -199,7 +199,7 @@ const resetCompanyData = () => {
         body: JSON.stringify(mappedCompany),
       });
 
-      console.log("##--companies", companies);
+      // console.log("##--companies", companies);
   
       if (!response.ok) {
         throw new Error('Failed to add company');
@@ -215,8 +215,8 @@ const resetCompanyData = () => {
       // Reset the form and close the modal
       // setNewCompanyData({ ...companyTableColumns });
 
-      console.log("!!!addedCompany!!!", addedCompany);
-      console.log("##--companies--##", companies);
+      // console.log("!!!addedCompany!!!", addedCompany);
+      // console.log("##--companies--##", companies);
 
       // close the modal
       setIsCompanyModalOpen(false);
@@ -234,10 +234,10 @@ const resetCompanyData = () => {
   //新規店舗の追加
   const handleAddShop = async () => {
 
-    console.log('!!companies!!', companies);
-    console.log('!!shopAddTargetIndex!!', shopAddTargetIndex); // company index
-    console.log('!!shopAddTargetIndex!!', companies[shopAddTargetIndex]);
-    console.log('!!newShopData!!', newShopData);
+    // console.log('!!companies!!', companies);
+    // console.log('!!shopAddTargetIndex!!', shopAddTargetIndex); // company index
+    // console.log('!!shopAddTargetIndex!!', companies[shopAddTargetIndex]);
+    // console.log('!!newShopData!!', newShopData);
 
     if (!newShopData.店舗名 || !newShopData.契約開始日 || !newShopData.契約終了日) {
       alert("店舗名、契約開始日、契約終了日は必須です。");
@@ -245,7 +245,7 @@ const resetCompanyData = () => {
     }
 
     const relating_company_id = companies[shopAddTargetIndex].company_id;
-    console.log('!!relating_company_id!!', relating_company_id);
+    // console.log('!!relating_company_id!!', relating_company_id);
 
     // TODO Map front-end keys to API keys
     const mappedShop = {
@@ -260,8 +260,8 @@ const resetCompanyData = () => {
     };
 
     try {
-      console.log("INSERT relating_company_id", relating_company_id); 
-      console.log("INSERT mappedShop", mappedShop); // Logs the object with the new keys
+      // console.log("INSERT relating_company_id", relating_company_id); 
+      // console.log("INSERT mappedShop", mappedShop); // Logs the object with the new keys
 
       // API call to add the new shop
       const response = await fetch(`https://0jdf7qckt2.execute-api.ap-northeast-1.amazonaws.com/dev/shop/${relating_company_id}`, {
@@ -278,12 +278,12 @@ const resetCompanyData = () => {
 
       //リターンでデータの受け取りと、追加
       const addedShops = await response.json(); // Assuming the API returns the added company data
-      console.log("!!!addedShops!!!", addedShops);
-      console.log("!!!--shops--!!!", shops);
+      // console.log("!!!addedShops!!!", addedShops);
+      // console.log("!!!--shops--!!!", shops);
 
       const shop_id_for_link = addedShops.shop_id
 
-      console.log("!!!--shop_id_for_link--!!!", shop_id_for_link);
+      // console.log("!!!--shop_id_for_link--!!!", shop_id_for_link);
       const link_response = await fetch(`https://0jdf7qckt2.execute-api.ap-northeast-1.amazonaws.com/dev/survey-link/${relating_company_id}/${shop_id_for_link}`, {
         method: 'POST',
         headers: {
@@ -300,7 +300,7 @@ const resetCompanyData = () => {
 
       addedShops.survey_link = addedSurveyLink.survey_link
 
-      console.log("!!survey_link!!", addedShops.survey_link)
+      // console.log("!!survey_link!!", addedShops.survey_link)
 
       // ローカル状態に新店舗を追加
       setShops([...shops, addedShops]);
@@ -324,15 +324,15 @@ const resetCompanyData = () => {
   const handleDeleteShop = async (companyIndex, shop_id) => {
     const company = companies[companyIndex];//会社の指定
     const shopInCompany = shops.find(shop => shop.company_id === company.company_id && shop.shop_id === shop_id);;//ショップの指定
-    console.log("@@company",company)
-    console.log("@@shopInCompany",shopInCompany)
+    // console.log("@@company",company)
+    // console.log("@@shopInCompany",shopInCompany)
 
     const isConfirmed = window.confirm(`${shopInCompany.shop_name} を本当に削除しますか？`);
 
     if (isConfirmed) {
       try {
         // Set the contract to 'cancel'
-        console.log("@@DELETE shop", shopInCompany)
+        // console.log("@@DELETE shop", shopInCompany)
         shopInCompany.contract = 'cancel';
 
         // TODO Make the API request to delete the company /shop/temp_status_changes/{company_id}/{shop_id}/{contract}
@@ -343,7 +343,7 @@ const resetCompanyData = () => {
           }
         });
 
-        console.log("@@DELETE shop response", response)
+        // console.log("@@DELETE shop response", response)
 
         if (response.ok) {
           setShops(shops.filter(shop => shop.shop_id !== shop_id));
@@ -363,8 +363,8 @@ const resetCompanyData = () => {
   //既存店舗の編集項目表示
   const handleEditShopModalContents = (companyIndex, shop_id) => {
 
-    console.log('!!!companyIndex!!!', companyIndex)
-    console.log('!!!shop_id!!!', shop_id)
+    // console.log('!!!companyIndex!!!', companyIndex)
+    // console.log('!!!shop_id!!!', shop_id)
     const company = companies[companyIndex];//会社の指定
     const company_id = company.company_id
     const shopToEdit = shops.find(shop => shop.company_id === company_id && shop.shop_id === shop_id);;//ショップの指定
@@ -382,7 +382,7 @@ const resetCompanyData = () => {
     };
     setEditingShop({ ...mappedShopForUI, shop_id, company_id});
 
-    console.log('RRRR', mappedShopForUI)
+    // console.log('RRRR', mappedShopForUI)
     setIsShopModalOpen(true);
   };
 
@@ -394,7 +394,7 @@ const resetCompanyData = () => {
     const index = shops.findIndex(
       shop => shop.company_id === company_id && shop.shop_id === shop_id
     );
-    console.log('!!!index!!!', index)
+    // console.log('!!!index!!!', index)
 
     const updatedShop = { ...editingShop, index};
 
@@ -417,17 +417,17 @@ const resetCompanyData = () => {
         },
         body: JSON.stringify(updatedShopPayload),
       });
-      console.log('@@response@@', response)
+      // console.log('@@response@@', response)
 
       if (response.ok) {
-        console.log('##########', updatedShop)
+        // console.log('##########', updatedShop)
         // 更新対象だけを更新する
         setShops(prevShops => {
           const newShops = [...prevShops];
           newShops[index] = { ...newShops[index], ...updatedShopPayload };
           return newShops;
         });
-        console.log('######rr####', response)
+        // console.log('######rr####', response)
         setEditingShop(null);
         setIsShopModalOpen(false);
         alert(`${updatedShopPayload.shop_name}の更新に成功しました。`);
@@ -714,6 +714,7 @@ const resetCompanyData = () => {
       {/* 企業モーダル */}
       <Modal isOpen={isCompanyModalOpen} onRequestClose={() => setIsCompanyModalOpen(false)} style={{ content: { maxWidth: "600px", margin: "auto" } }}>
         <h3>{editingCompany ? "企業情報を編集" : "新規企業を追加"}</h3>
+
         {(editingCompany ? Object.keys(editingCompany).filter(k => k !== "id" && k !== "shops" && k !== "index") : Object.keys(newCompanyData)).map(key => (
           <div key={key} style={{ marginBottom: "10px" }}>
             <label>{key}:</label>
