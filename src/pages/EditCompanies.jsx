@@ -29,6 +29,8 @@ const ManageInfo = () => {
   const [loading, setLoading] = useState(true); // Optional: ローディング状態管理
   const [error, setError] = useState(null);     // Optional: エラーハンドリング
 
+  console.log("shops", shops)
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -41,6 +43,7 @@ const ManageInfo = () => {
         // 取得したデータをそれぞれのステートに保存
         setCompanies(companiesResponse.data);
         setShops(shopsResponse.data);
+        console.log("shopsResponse", shopsResponse)
       } catch (err) {
         setError("データの取得に失敗しました");
         console.error(err);
@@ -250,9 +253,9 @@ const resetCompanyData = () => {
     // TODO Map front-end keys to API keys
     const mappedShop = {
       shop_name: newShopData.店舗名,
-      shop_owner_name: newShopData.店舗住所,
+      shop_owner_name: newShopData.代表者,
       shop_contact_address: newShopData.メールアドレス,
-      shop_location: newShopData.代表者,
+      shop_location: newShopData.店舗住所,
       start_contract_date: newShopData.契約開始日,
       end_contract_date: newShopData.契約終了日,
       in_charge: newShopData.担当者,
@@ -444,7 +447,7 @@ const resetCompanyData = () => {
 
   // ~~~~~~~~~~~~~~~~~~~~ HTML ~~~~~~~~~~~~~~~~~~~~
   return (
-    <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "20px", fontFamily: "'Arial', sans-serif", color: "#333" }}>
+    <div style={{ maxWidth: "90%", margin: "0 auto", padding: "20px", fontFamily: "'Arial', sans-serif", color: "#333" }}>
       
     {/* ホームに戻るボタン */}
     <div className="back-button-wrapper">
@@ -639,15 +642,15 @@ const resetCompanyData = () => {
                     {companyShops.length > 0 ? (
                       companyShops.map((shop, shopIndex) => (
                         <tr key={shop.id}>
-                          <td>{shop.shop_name}</td>
-                          <td>{shop.shop_location}</td>
-                          <td>{shop.shop_contact_address}</td>
-                          <td>{shop.shop_owner_name}</td>
-                          <td>{shop.start_contract_date}</td>
-                          <td>{shop.end_contract_date}</td>
-                          <td>{shop.in_charge}</td>
-                          <td>{shop.remarks}</td>
-                          
+                          <td className="wrappable-cell">{shop.shop_name}</td>
+                          <td className="wrappable-cell">{shop.shop_location}</td>
+                          <td className="wrappable-cell">{shop.shop_contact_address}</td>
+                          <td className="wrappable-cell">{shop.shop_owner_name}</td>
+                          <td className="wrappable-cell">{shop.start_contract_date}</td>
+                          <td className="wrappable-cell">{shop.end_contract_date}</td>
+                          <td className="wrappable-cell">{shop.in_charge}</td>
+                          <td className="wrappable-cell">{shop.remarks}</td>
+
                           <td className="link-cell" title={shop.survey_link}>
                           <a
                             href={shop.survey_link}

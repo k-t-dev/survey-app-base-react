@@ -53,3 +53,18 @@
     color: #0056b3;
   }
   
+
+
+  .wrappable-cell {
+    word-break: break-word;
+    white-space: normal;
+  }
+  
+
+  .wrappable-cell {
+    word-break: break-word;
+    white-space: normal;
+    padding: 8px;
+    font-size: 15px; /* ← ここでサイズ調整 */
+  }
+  
