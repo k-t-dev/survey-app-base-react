@@ -13,6 +13,7 @@ import {
   PieChart,
   Pie,
   Cell,
+  ResponsiveContainer
 } from "recharts";
 import "./Dashboard.css";
 import MenuBar from "./MenuBar"; // MenuBar コンポーネントをインポート
@@ -76,7 +77,16 @@ const Dashboard = () => {
 
           // Extract feedback data where first_question is true
           const feedback = data.filter((item) => item.first_question);
-          setFeedbackData(feedback);
+
+          const seen = new Set();
+          const uniqueFeedback = feedback.filter(item => {
+            const key = JSON.stringify(item);
+            if (seen.has(key)) return false;
+            seen.add(key);
+            return true;
+          });
+
+          setFeedbackData(uniqueFeedback);
 
         } else if (response.status === 404) {
           // データが存在しない場合
@@ -300,10 +310,11 @@ const Dashboard = () => {
 
             <div className="dashboard-chart-row">
               {/* Line Chart: Total Answers over Time */}
+              <ResponsiveContainer width="100%" height={300}>
               <div className="chart-title">回答数の時系列グラフ</div>
               <LineChart
-                width={400}
-                height={300}
+                // width={400}
+                // height={300}
                 data={prepareLineChartData(question.id)}
                 margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
               >
@@ -326,10 +337,12 @@ const Dashboard = () => {
                   isAnimationActive={false}
                 />
               </LineChart>
+              </ResponsiveContainer>
 
               {/* Bar Chart: Total Count of Each Answer (Filtered by Time) */}
+              <ResponsiveContainer width="100%" height={300}>
               <div className="chart-title">各回答別の総計数グラフ</div>
-              <BarChart width={400} height={300} data={aggregateAnswers(question.id)} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+              <BarChart width={500} height={300} data={aggregateAnswers(question.id)} margin={{ top: 20, right:30, left: 20, bottom: 20 }}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis type="category" dataKey="option" />
                 <YAxis />
@@ -337,7 +350,10 @@ const Dashboard = () => {
                 <Legend />
                 <Bar dataKey="count" fill={colors[0]} name="回答数" />
               </BarChart>
+              </ResponsiveContainer>
+
               {/* Pie Chart: Distribution of Answers (Filtered by Time) */}
+              <ResponsiveContainer width="100%" height={300}>
               <div className="chart-title">回答の割合</div>
               <PieChart width={400} height={300}>
                 <Pie
@@ -346,9 +362,11 @@ const Dashboard = () => {
                   nameKey="option"
                   cx="50%"
                   cy="50%"
-                  outerRadius={100}
+                  outerRadius={50}
+                  labelLine={true}
+                  fontSize={10} 
                   label={(entry) =>
-                    `${entry.option}: ${(entry.percent * 100).toFixed(0)}%`
+                    `${entry.option}:${(entry.percent * 100).toFixed(0)}%`
                   }
                 >
                   {aggregateAnswers(question.id).map((entry, index) => (
@@ -360,6 +378,7 @@ const Dashboard = () => {
                 </Pie>
                 <Legend />
               </PieChart>
+              </ResponsiveContainer>
             </div>
           </div>
         ))}
