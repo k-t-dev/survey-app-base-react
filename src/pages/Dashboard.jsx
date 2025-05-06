@@ -383,116 +383,120 @@ const Dashboard = () => {
           </div>
         ))}
 
-        <div className="feedback-section">
-          <h2>お客様の声</h2>
-          <div className="feedback-display" style={{ display: "flex", gap: "16px" }}>
-            
-            {/* テーブル（左） */}
-            <div className="feedback-table-scroll-container" style={{ flex: 1, maxHeight: "400px", overflowY: "auto", border: "1px solid #ccc" }}>
-              <table className="feedback-table" style={{ width: "100%", borderCollapse: "collapse" }}>
-                <thead>
-                  <tr>
-                    <th onClick={() => handleSort("answer_time")}>
-                      回答日時
-                      {sortConfig.key === "answer_time" && (
-                        <span>{sortConfig.direction === "ascending" ? " ▲" : " ▼"}</span>
-                      )}
-                    </th>
-                    <th>コメント</th>
-                    <th>評価</th>
-                  </tr>
-                </thead>
+<div className="feedback-section">
+  <h2>お客様の声</h2>
+  <div className="feedback-display" style={{ display: "flex", gap: "16px" }}>
+    
+    {/* テーブル（左） */}
+    <div className="feedback-table-scroll-container" style={{ flex: 1, maxHeight: "400px", overflowY: "auto", border: "1px solid #ccc" }}>
+      <table className="feedback-table" style={{ width: "100%", borderCollapse: "collapse" }}>
+        <thead>
+          <tr>
+            <th onClick={() => handleSort("answer_time")}>
+              回答日時
+              {sortConfig.key === "answer_time" && (
+                <span>{sortConfig.direction === "ascending" ? " ▲" : " ▼"}</span>
+              )}
+            </th>
+            <th>コメント</th>
+            <th>評価</th>
+          </tr>
+        </thead>
 
-                <tbody>
-                  {/* フィルター入力行 */}
-                  <tr>
-                    <td></td>
-                    <td>
-                      <input
-                        type="text"
-                        name="comment"
-                        value={filters.comment || ""}
-                        onChange={handleFilterChange}
-                        placeholder="フィルター"
-                        style={{
-                          width: "100%",
-                          height: "24px",
-                          fontSize: "12px",
-                          padding: "2px 6px",
-                          boxSizing: "border-box"
-                        }}
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        name="star"
-                        value={filters.star || ""}
-                        onChange={handleFilterChange}
-                        placeholder="フィルター"
-                        style={{
-                          width: "100%",
-                          height: "24px",
-                          fontSize: "12px",
-                          padding: "2px 6px",
-                          boxSizing: "border-box"
-                        }}
-                      />
-                    </td>
-                  </tr>
+        <tbody>
+          {/* フィルター入力行 */}
+          <tr>
+            <td></td>
+            <td>
+              <input
+                type="text"
+                name="comment"
+                value={filters.comment || ""}
+                onChange={handleFilterChange}
+                placeholder="フィルター"
+                style={{
+                  width: "100%",
+                  height: "24px",
+                  fontSize: "12px",
+                  padding: "2px 6px",
+                  boxSizing: "border-box"
+                }}
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                name="star"
+                value={filters.star || ""}
+                onChange={handleFilterChange}
+                placeholder="フィルター"
+                style={{
+                  width: "100%",
+                  height: "24px",
+                  fontSize: "12px",
+                  padding: "2px 6px",
+                  boxSizing: "border-box"
+                }}
+              />
+            </td>
+          </tr>
 
-                  {/* フィードバック行 */}
-                  {filteredFeedbackData.map((item, index) => {
-                    const comment = item.comment || "---";
-                    const star = item.star || "---";
+          {/* フィードバック行 */}
+          {filteredFeedbackData.map((item, index) => {
+            const comment = item.comment || "---";
+            const star = item.star || "---";
 
-                    if (comment === "---" && star === "---") {
-                      return null;
-                    }
+            if (comment === "---" && star === "---") {
+              return null;
+            }
 
-                    return (
-                      <tr key={`feedback-${index}`}>
-                        <td>{moment(item.answer_time).format("YYYY-MM-DD HH:mm")}</td>
-                        <td>{comment}</td>
-                        <td>{star}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
+            return (
+              <tr key={`feedback-${index}`}>
+                <td>{moment(item.answer_time).format("YYYY-MM-DD HH:mm")}</td>
+                <td>{comment}</td>
+                <td>{star}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
 
-            {/* チャート（右） */}
-            {Object.keys(dayFilteredStarCount).length > 0 && (
-              <div className="star-pie-chart" style={{ width: "300px", flexShrink: 0 }}>
-                <h3>評価分布</h3>
-                <PieChart width={300} height={300}>
-                  <Pie
-                    data={Object.entries(dayFilteredStarCount).map(([star, count]) => ({
-                      star,
-                      count,
-                    }))}
-                    dataKey="count"
-                    nameKey="star"
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={60}
-                    innerRadius={0}
-                    label={(entry) => `${entry.star}★(${(entry.percent * 100).toFixed(1)}%)`}
-                  >
-                    {Object.keys(dayFilteredStarCount).map((star, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={starColors[parseInt(star) - 1] || "#ccc"}
-                      />
-                    ))}
-                  </Pie>
-                  <Legend />
-                </PieChart>
-              </div>
-            )}
-          </div>
-        </div>
+    {/* チャート（右） */}
+    {Object.keys(dayFilteredStarCount).length > 0 && (
+      <div className="star-pie-chart" style={{ width: "300px", flexShrink: 0 }}>
+        <ResponsiveContainer width="100%" height={300}>
+        <div className="chart-title">回答の割合</div>
+          <PieChart>
+            <Pie
+              data={Object.entries(dayFilteredStarCount).map(([star, count]) => ({
+                star,
+                count,
+              }))}
+              dataKey="count"
+              nameKey="star"
+              cx="50%"
+              cy="40%"
+              outerRadius={50}
+              innerRadius={0}
+              label={(entry) => `${entry.star}★(${(entry.percent * 100).toFixed(1)}%)`}
+            >
+              {Object.keys(dayFilteredStarCount).map((star, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={starColors[parseInt(star) - 1] || "#ccc"}
+                />
+              ))}
+            </Pie>
+            <Legend />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+    )}
+
+  </div>
+</div>
+
 
       </div>
     </div>
