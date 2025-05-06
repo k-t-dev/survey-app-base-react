@@ -17,6 +17,7 @@ import {
 import "./Dashboard.css";
 import MenuBar from "./MenuBar"; // MenuBar コンポーネントをインポート
 import moment from "moment"; // Moment.js for easier date manipulation
+import dayjs from 'dayjs';
 
 const Dashboard = () => {
   const { companyId, shopId } = useParams();
@@ -300,9 +301,18 @@ const Dashboard = () => {
             <div className="dashboard-chart-row">
               {/* Line Chart: Total Answers over Time */}
               <div className="chart-title">回答数の時系列グラフ</div>
-              <LineChart width={400} height={300} data={prepareLineChartData(question.id)}>
+              <LineChart
+                width={400}
+                height={300}
+                data={prepareLineChartData(question.id)}
+                margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+              >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="time" />
+                <XAxis
+                  dataKey="time"
+                  domain={['auto', 'auto']}
+                  tickFormatter={(t) => dayjs(t).format("MM/DD")}
+                />
                 <YAxis />
                 <Tooltip />
                 <Legend />
@@ -311,12 +321,15 @@ const Dashboard = () => {
                   dataKey="count"
                   stroke={colors[0]}
                   name="回答数"
+                  dot={{ r: 4 }}
+                  activeDot={{ r: 8}}
+                  isAnimationActive={false}
                 />
               </LineChart>
 
               {/* Bar Chart: Total Count of Each Answer (Filtered by Time) */}
               <div className="chart-title">各回答別の総計数グラフ</div>
-              <BarChart width={400} height={300} data={aggregateAnswers(question.id)}>
+              <BarChart width={400} height={300} data={aggregateAnswers(question.id)} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis type="category" dataKey="option" />
                 <YAxis />
