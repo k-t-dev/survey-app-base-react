@@ -119,10 +119,10 @@ const SurveyPage = () => {
           setGoogleLink(firstQuestionResponse.google_review_link);
           setShowPopup(true);
       
-          // 3秒後に自動遷移
+          // 1秒後に自動遷移
           setTimeout(() => {
             window.location.href = firstQuestionResponse.google_review_link;
-          }, 3000);
+          }, 1000);
           return;
         } else if (firstQuestionResponse.judge === "custom") {
           navigate(`/survey-app/survey-preview/comment/${companyId}/${shopId}`, { state: { surveyPayload } });
