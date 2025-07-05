@@ -34,6 +34,9 @@ const Dashboard = () => {
   const [sortConfig, setSortConfig] = useState({ key: "answer_time", direction: "descending" }); // 初期ソート設定
   const [filters, setFilters] = useState({}); // フィルターの状態
 
+  const [aggregationUnit, setAggregationUnit] = useState("day"); // ← これを追加！
+  console.log("aggregationUnit:  ", aggregationUnit)
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true); // データ取得開始時にローディングをtrueに
@@ -108,6 +111,8 @@ const Dashboard = () => {
     fetchData();
   }, [companyId, shopId]);
 
+
+  // フィルターPart
   const timeFrameOptions = [
     { value: "3days", label: "📅 過去3日" },
     { value: "week", label: "📅 1週間" },
@@ -115,6 +120,13 @@ const Dashboard = () => {
     { value: "3months", label: "📅 3か月" },
     { value: "custom", label: "📅 期間指定" },
     { value: "all", label: "📅 全期間" },
+  ];
+
+  const aggregationOptions = [
+    { value: "day", label: "日単位" },
+    { value: "week", label: "週単位" },
+    { value: "month", label: "月単位" },
+    { value: "all", label: "全体" },
   ];
 
   const filterDataByTimeFrame = (data) => {
@@ -144,7 +156,8 @@ const Dashboard = () => {
         break;
       case "custom":
         const start = moment(customStartDate);
-        const end = moment(customEndDate);
+        const end = moment(customEndDate).endOf("day"); // その日の最後の瞬間まで含める
+
         filteredData = data.filter(
           (item) =>
             moment(item.answer_time).isSameOrAfter(start) &&
@@ -155,9 +168,11 @@ const Dashboard = () => {
       default:
         break;
     }
+    
     return filteredData;
   };
 
+  // フィルター　アンケートの棒グラフと円グラフPart
   const aggregateAnswers = (questionId) => {
     const filteredData = filterDataByTimeFrame(allData).filter(
       (item) => item.question_id === questionId
@@ -172,18 +187,43 @@ const Dashboard = () => {
     }));
   };
 
+  // フィルター　アンケート別の総回答数Part
   const prepareLineChartData = (questionId) => {
     const filteredData = filterDataByTimeFrame(allData).filter(
       (item) => item.question_id === questionId
     );
+
+    if (aggregationUnit === "all") {
+      return [{
+        time: "全体",
+        count: filteredData.length
+      }];
+    }
+
+    // const timeGrouped = {};
+    // filteredData.forEach((item) => {
+    //   const date = moment(item.answer_time).format("YYYY-MM-DD"); // Group by day
+    //   timeGrouped[date] = (timeGrouped[date] || 0) + 1;
+    // });
+
+    // aggregationUnitに応じたキーでグルーピング（週Filter 日曜日~土曜日、　　月Filter）
     const timeGrouped = {};
     filteredData.forEach((item) => {
-      const date = moment(item.answer_time).format("YYYY-MM-DD"); // Group by day
-      timeGrouped[date] = (timeGrouped[date] || 0) + 1;
+      const dateKey = moment(item.answer_time).startOf(aggregationUnit).format("YYYY-MM-DD");
+      timeGrouped[dateKey] = (timeGrouped[dateKey] || 0) + 1;
     });
-    return Object.entries(timeGrouped)
-      .sort((a, b) => new Date(a[0]) - new Date(b[0])) // Sort by date
-      .map(([time, count]) => ({ time, count }));
+
+    const aggByUserInput = Object.entries(timeGrouped)
+    .sort((a, b) => new Date(a[0]) - new Date(b[0]))
+    .map(([time, count]) => ({ time, count }));
+
+    // const aggByUserInput =  Object.entries(timeGrouped)
+    // .sort((a, b) => new Date(a[0]) - new Date(b[0])) // Sort by date
+    // .map(([time, count]) => ({ time, count }));
+    // console.log("aggByUserInput", aggByUserInput);
+
+    return aggByUserInput
+
   };
 
   const handleSort = (key) => {
@@ -194,6 +234,7 @@ const Dashboard = () => {
     setSortConfig({ key, direction });
   };
 
+  // フィルター　ユーザーコメント
   const dayfilteredFirstQestionData = filterDataByTimeFrame(feedbackData);
   
   const dayFilteredStarCount = {};
@@ -267,28 +308,29 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-layout">
-      <MenuBar />
-      <div className="dashboard-content">
-        <div className="dashboard-header">
-          <h1> アンケート結果</h1>
-        </div>
+    <MenuBar />
+    <div className="dashboard-content">
+      <div className="dashboard-header">
+        <h1>アンケート結果</h1>
+      </div>
 
-        <div className="dashboard-selector">
-          <label htmlFor="timeFrameSelect">表示単位: </label>
-          <select
-            id="timeFrameSelect"
-            value={timeFrame}
-            onChange={(e) => setTimeFrame(e.target.value)}
-            className="dashboard-select"
-          >
-            {timeFrameOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
+      {/* 時間範囲のセレクタ */}
+      <div className="dashboard-selector">
+        <label htmlFor="timeFrameSelect">表示期間: </label>
+        <select
+          id="timeFrameSelect"
+          value={timeFrame}
+          onChange={(e) => setTimeFrame(e.target.value)}
+          className="dashboard-select"
+        >
+          {timeFrameOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
 
-          {timeFrame === "custom" && (
+        {timeFrame === "custom" && (
             <>
               <input
                 type="date"
@@ -302,7 +344,26 @@ const Dashboard = () => {
               />
             </>
           )}
-        </div>
+
+      </div>
+      
+      {/* ▼ 集計単位セレクタを追加 */}
+      <div className="dashboard-selector">
+        <label htmlFor="aggregationUnitSelect">集計単位: </label>
+        <select
+          id="aggregationUnitSelect"
+          value={aggregationUnit}
+          onChange={(e) => setAggregationUnit(e.target.value)}
+          className="dashboard-select"
+        >
+        {aggregationOptions.map((opt) => (
+          <option key={opt.value} value={opt.value}>
+            {opt.label}
+          </option>
+        ))}
+
+        </select>
+      </div>
 
         {questions.map((question) => (
           <div key={question.id} className="dashboard-chart-container">
@@ -322,7 +383,9 @@ const Dashboard = () => {
                 <XAxis
                   dataKey="time"
                   domain={['auto', 'auto']}
-                  tickFormatter={(t) => dayjs(t).format("MM/DD")}
+                  tickFormatter={(t) =>
+                    t === "全体" || t === "Total" ? t : dayjs(t).format("MM/DD")
+                  }
                 />
                 <YAxis />
                 <Tooltip />
@@ -383,6 +446,7 @@ const Dashboard = () => {
           </div>
         ))}
 
+{/*  コメント用Tableと円グラフの表示*/}
 <div className="feedback-section">
   <h2>お客様の声</h2>
   <div className="feedback-display" style={{ display: "flex", gap: "16px" }}>
@@ -496,6 +560,15 @@ const Dashboard = () => {
 
   </div>
 </div>
+
+
+{/* 
+<div className="feedback-section">
+  <h2>アンケート回答総合計数</h2>
+  <div className="feedback-display" style={{ display: "flex", gap: "16px" }}>
+    
+  </div>
+</div> */}
 
 
       </div>
